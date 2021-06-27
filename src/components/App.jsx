@@ -53,7 +53,9 @@ class App extends Component {
                 "overview": "This is a wider card with supporting text below as a natural lead-in to additional content.",
                 "imageURL": "https://image.tmdb.org/t/p/w220_and_h330_face/6Bbq8qQWpoApLZYWFFAuZ1r2gFw.jpg"
             }
-        ]
+        ],
+
+        searchQuery: ""
     }
 
     deleteMovie = (movie) => {
@@ -64,16 +66,28 @@ class App extends Component {
         this.setState(state => state.movies = newMovieList);
     }
 
+    searchMovie = (event) => {
+        this.setState({
+            searchQuery: event.target.value
+        });
+    }
+
     render() {
+        let filteredMovies = this.state.movies.filter(
+            (movie) => {
+                return movie.name.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
+            }
+        );
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <SearchBar />
+                        <SearchBar searchMovieProp={this.searchMovie} />
                     </div>
                 </div>
                 <MovieList
-                    movies={this.state.movies}
+                    movies={filteredMovies}
                     deleteMovieProp={this.deleteMovie} />
             </div>
         );
