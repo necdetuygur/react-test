@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import SearchBar from './SearchBar';
+import MovieList from './MovieList';
 
 class App extends Component {
     state = {
@@ -28,11 +31,28 @@ class App extends Component {
             }
         ]
     }
-    
+
+    deleteMovie = (movie) => {
+        const newMovieList = this.state.movies.filter(
+            m => m.id !== movie.id
+        );
+
+        this.setState({
+            movies: newMovieList
+        });
+    }
+
     render() {
         return (
-            <div>
-                test
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <SearchBar />
+                    </div>
+                </div>
+                <MovieList
+                    movies={this.state.movies}
+                    deleteMovieProp={this.deleteMovie} />
             </div>
         );
     }
