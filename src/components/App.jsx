@@ -37,9 +37,7 @@ class App extends Component {
             m => m.id !== movie.id
         );
 
-        this.setState({
-            movies: newMovieList
-        });
+        this.setState(state => state.movies = newMovieList);
     }
 
     render() {
